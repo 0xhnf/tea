@@ -51,22 +51,22 @@ const readAddressesFromFile = (filePath) => {
 
 // Fungsi untuk menghasilkan jumlah token acak antara 0.05 dan 0.2 TEA
 const getRandomAmount = () => {
-    const min = 0.05; // Minimum 0.05 TEA
-    const max = 0.2;  // Maksimum 0.2 TEA
+    const min = 0.005; // Minimum 0.05 TEA
+    const max = 0.012;  // Maksimum 0.2 TEA
     return ethers.parseEther((Math.random() * (max - min) + min).toFixed(5));
 };
 
 // Fungsi untuk menghasilkan jeda acak antara 10 dan 20 detik
 const getRandomDelay = () => {
-    const minDelay = 10 * 1000; // 10 detik dalam milidetik
-    const maxDelay = 20 * 1000; // 20 detik dalam milidetik
+    const minDelay = 7 * 1000; // 10 detik dalam milidetik
+    const maxDelay = 15 * 1000; // 20 detik dalam milidetik
     return Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 };
 
 // Fungsi untuk mengecek dan menunggu jeda 24 jam jika sudah 200 transaksi
 let transactionCount = 0; // Counter global untuk melacak jumlah transaksi
 const checkTransactionLimit = async () => {
-    const MAX_TRANSACTIONS = 200; // Batas 200 transaksi
+    const MAX_TRANSACTIONS = 105; // Batas 200 transaksi
     const DELAY_24H = 24 * 60 * 60 * 1000; // 24 jam dalam milidetik
 
     if (transactionCount >= MAX_TRANSACTIONS) {
@@ -84,10 +84,10 @@ const getTransactionCountInput = async () => {
     });
 
     return new Promise(resolve => {
-        rl.question("Masukkan jumlah transaksi yang akan dilakukan (1-100): ", (input) => {
+        rl.question("Masukkan jumlah transaksi yang akan dilakukan (1-100000): ", (input) => {
             const num = parseInt(input);
-            if (isNaN(num) || num < 1 || num > 100) {
-                console.log("Input tidak valid. Harap masukkan angka antara 1 dan 100.");
+            if (isNaN(num) || num < 1 || num > 100000) {
+                console.log("Input tidak valid. Harap masukkan angka antara 1 dan 100000.");
                 rl.close();
                 resolve(getTransactionCountInput()); // Minta input ulang jika invalid
             } else {
